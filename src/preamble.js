@@ -591,10 +591,10 @@ function stringToUTF16(str, outPtr) {
   for(var i = 0; i < str.length; ++i) {
     // charCodeAt returns a UTF-16 encoded code unit, so it can be directly written to the HEAP.
     var codeUnit = str.charCodeAt(i); // possibly a lead surrogate
-    {{{ makeSetValue('outPtr', 'i*2', 'codeUnit', 'i16') }}}
+    {{{ makeSetValue('outPtr', 'i*2', 'codeUnit', 'i16') }}};
   }
   // Null-terminate the pointer to the HEAP.
-  {{{ makeSetValue('outPtr', 'str.length*2', 0, 'i16') }}}
+  {{{ makeSetValue('outPtr', 'str.length*2', 0, 'i16') }}};
 }
 Module['stringToUTF16'] = stringToUTF16;
 
@@ -632,11 +632,11 @@ function stringToUTF32(str, outPtr) {
       var trailSurrogate = str.charCodeAt(++iCodeUnit);
       codeUnit = 0x10000 + ((codeUnit & 0x3FF) << 10) | (trailSurrogate & 0x3FF);
     }
-    {{{ makeSetValue('outPtr', 'iChar*4', 'codeUnit', 'i32') }}}
+    {{{ makeSetValue('outPtr', 'iChar*4', 'codeUnit', 'i32') }}};
     ++iChar;
   }
   // Null-terminate the pointer to the HEAP.
-  {{{ makeSetValue('outPtr', 'iChar*4', 0, 'i32') }}}
+  {{{ makeSetValue('outPtr', 'iChar*4', 0, 'i32') }}};
 }
 Module['stringToUTF32'] = stringToUTF32;
 
@@ -1043,7 +1043,7 @@ function writeStringToMemory(string, buffer, dontAddNull) {
   var i = 0;
   while (i < array.length) {
     var chr = array[i];
-    {{{ makeSetValue('buffer', 'i', 'chr', 'i8') }}}
+    {{{ makeSetValue('buffer', 'i', 'chr', 'i8') }}};
     i = i + 1;
   }
 }
@@ -1061,9 +1061,9 @@ function writeAsciiToMemory(str, buffer, dontAddNull) {
 #if ASSERTIONS
     assert(str.charCodeAt(i) === str.charCodeAt(i)&0xff);
 #endif
-    {{{ makeSetValue('buffer', 'i', 'str.charCodeAt(i)', 'i8') }}}
+    {{{ makeSetValue('buffer', 'i', 'str.charCodeAt(i)', 'i8') }}};
   }
-  if (!dontAddNull) {{{ makeSetValue('buffer', 'str.length', 0, 'i8') }}}
+  if (!dontAddNull) {{{ makeSetValue('buffer', 'str.length', 0, 'i8') }}};
 }
 Module['writeAsciiToMemory'] = writeAsciiToMemory;
 
